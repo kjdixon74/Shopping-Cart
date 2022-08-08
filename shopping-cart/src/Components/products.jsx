@@ -1,4 +1,19 @@
-// Why is page reloading at beginning?
+import React from "react";
+import {
+  Card,
+  Accordion,
+  Button,
+  Container,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
+import axios from "axios";
+import apple from "../Images/apple.png";
+import beans from "../Images/beans.png";
+import cabbage from "../Images/cabbage.png";
+import orange from "../Images/orange.png";
 
 // Simulate getting products from Strapi database
 const products = [
@@ -8,13 +23,12 @@ const products = [
   { name: "Cabbage", country: "USA", cost: 1, instock: 8 },
 ];
 //=========Cart=============
-const Cart = (props) => {
-  const { Card, Accordion, Button } = ReactBootstrap;
-  let data = props.location.data ? props.location.data : products;
-  console.log(`data:${JSON.stringify(data)}`);
+// const Cart = (props) => {
+//   let data = props.location.data ? props.location.data : products;
+//   console.log(`data:${JSON.stringify(data)}`);
 
-  return <Accordion defaultActiveKey="0">{list}</Accordion>;
-};
+//   return <Accordion defaultActiveKey="0">{list}</Accordion>;
+// };
 
 const useDataApi = (initialUrl, initialData) => {
   const { useState, useEffect, useReducer } = React;
@@ -75,13 +89,11 @@ const dataFetchReducer = (state, action) => {
       throw new Error();
   }
 };
-
-const Products = (props) => {
+function Products(props) {
   const [items, setItems] = React.useState(products);
   const [cart, setCart] = React.useState([]);
   const [total, setTotal] = React.useState(0);
-  const { Card, Accordion, Button, Container, Row, Col, Image, Input } =
-    ReactBootstrap;
+
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
   const [query, setQuery] = useState("http://localhost:1337/api/products");
@@ -107,7 +119,7 @@ const Products = (props) => {
     deletedItem[0].instock += 1;
     setCart(newCart);
   };
-  const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
+  const photos = [apple, orange, beans, cabbage];
 
   let list = items.map((item, index) => {
     return (
@@ -125,20 +137,32 @@ const Products = (props) => {
       </li>
     );
   });
+
+  // From React-Bootstrap
+  let CustomToggle = ({ item, eventKey }) => {
+    const decoratedOnClick = useAccordionButton(eventKey, () =>
+      console.log("totally custom!")
+    );
+
+    return (
+      <button type="button" onClick={decoratedOnClick}>
+        {item}
+      </button>
+    );
+  };
+
   let cartList = cart.map((item, index) => {
     return (
       <Card key={index}>
         <Card.Header>
-          <Accordion.Toggle as={Button} variant="link" eventKey={1 + index}>
-            {item.name}
-          </Accordion.Toggle>
+          <CustomToggle item={item.name} eventKey={1 + index}></CustomToggle>
         </Card.Header>
         <Accordion.Collapse eventKey={1 + index}>
           <Card.Body>
             $ {item.cost} from {item.country}{" "}
             <button
               onClick={() => {
-                let result = confirm(
+                let result = window.confirm(
                   "Are you sure you want to delete this item from your cart?"
                 );
                 if (result) {
@@ -220,6 +244,6 @@ const Products = (props) => {
       </Row>
     </Container>
   );
-};
-// ========================================
-ReactDOM.render(<Products />, document.getElementById("root"));
+}
+
+export default Products;
