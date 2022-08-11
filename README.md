@@ -10,7 +10,7 @@ A simple simulation of grocery shopping!
 
 1. Fork repository to GitHub account
 2. Clone repository to local machine
-3. Open index.html in the browser to view
+3. Move to project directory and run "npm start" in terminal
 
 ## Roadmap of Future Improvements
 
