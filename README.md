@@ -4,13 +4,22 @@ Shopping Cart
 
 ## Description
 
-A simple simulation of grocery shopping!
+A simple simulation of online grocery shopping
 
 ## How To Run
 
 1. Fork repository to GitHub account
 2. Clone repository to local machine
-3. Move to project directory and run "npm start" in terminal
+3. Move to cartDB folder under project directory and run `npm install` in terminal
+4. Move to shopping-cart folder under project directory and run `npm install` in terminal and once done, then run `npm run start`
+
+## Technology Used
+
+- HTML
+- CSS
+- JavaScript
+- React
+- Strapi
 
 ## Roadmap of Future Improvements
 
